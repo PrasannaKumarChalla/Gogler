@@ -52,6 +52,11 @@ end
     update_attribute(:reset_digest,  User.digest(reset_token))
     update_attribute(:reset_sent_at, Time.zone.now)
   end
+   # Returns true if a password reset has expired.
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+
 
   # Sends password reset email.
   def send_password_reset_email
